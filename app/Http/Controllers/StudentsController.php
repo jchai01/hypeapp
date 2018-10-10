@@ -9,6 +9,17 @@ use App\Payment;
 
 class StudentsController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => ['create', 'success', 'store']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
