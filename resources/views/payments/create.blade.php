@@ -23,15 +23,19 @@
 
     <!--Types of packages-->
     <div class="form-group" >
-      <label for="pack">Select Packages/lessons: </label>
+      <label for="pack">Select Packages/Lessons/Items: </label>
       <select name="package" id="package" class="form-control" onchange="changeAmount()">
         <option value="0">Select a Package</option>
         <option value="Individual Package">Individual Package($250)</option>
-        <option value="Buddy Package">Buddy Package($450)</option>
+        <option value="Buddy Package">Buddy Package($225 each)</option>
         <option value="Multi-Term Package">Multi-Term Package($500)</option>
         <option value="First Trial Class">First Trial Class($30)</option>
-        <option value="Subsequent Trial Class">Subsequent Trial Class($35)</option>
+        <option value="Subsequent Class">Subsequent Class($35)</option>
+        <option value="Hype Tribe Shirt">Hype Tribe Shirt($35)</option>
+        <option value="STG Shirt">STG Shirt($35)</option>
       </select>
+
+      <small class="p-2 mb-2 bg-warning text-dark" id="reminder" style="display:none;"> *Remember to make record for the other buddy </small>
     </div>
 
     <!--Quantity input-->
@@ -50,6 +54,13 @@
         <input type="number" step="any" name="amount" id="amount" class="form-control">
       </div>
     </div>
+
+    <!--Lessons bought input-->
+    <div class="form-group">
+    <label for="sel">Number of lessons bought: </label>
+        <input type="number" step="1" name="lessons" id="lessons" value="0" min="0" class="form-control">
+    </div>
+
     {{Form::submit('submit', ['class'=>'btn btn-success'])}}
   {!! Form::close() !!}
 </div>
@@ -57,23 +68,44 @@
 
 <script type="text/javascript">
   function changeAmount(){
+
+    //Link using getElementById
     var dropdown = document.getElementById('package');
     var amount =  document.getElementById('amount');
     var quantity =  document.getElementById('quantity');
-    if(dropdown.selectedIndex == 1){
+    var lessonsBought =  document.getElementById('lessons');
+    var reminder =  document.getElementById('reminder');
+
+    reminder.style.display = "none"; //Removes reminder text initially
+
+    if(dropdown.selectedIndex == 1){ //Individual package
       amount.value = 250 * quantity.value;
+      lessonsBought.value = 4 * quantity.value;
     }
-    else if(dropdown.selectedIndex == 2){
-      amount.value = 450 * quantity.value;
+    else if(dropdown.selectedIndex == 2){ //Buddy package
+      amount.value = 225 * quantity.value;
+      lessonsBought.value = 4 * quantity.value;
+      reminder.style.display = "block"; //Set reminder to make record for the other buddy
     }
-    else if(dropdown.selectedIndex == 3){
+    else if(dropdown.selectedIndex == 3){ //Multi-term package
       amount.value = 500 * quantity.value;
+      lessonsBought.value = 8 * quantity.value;
     }
-    else if(dropdown.selectedIndex == 4){
+    else if(dropdown.selectedIndex == 4){ //First trial class
       amount.value = 30 * quantity.value;
+      lessonsBought.value = 1 * quantity.value;
     }
-    else if(dropdown.selectedIndex == 5){
+    else if(dropdown.selectedIndex == 5){ //Subsequent class
       amount.value = 35 * quantity.value;
+      lessonsBought.value = 1 * quantity.value;
+    }
+    else if(dropdown.selectedIndex == 6){ //Hype Tribe Shirt
+      amount.value = 35 * quantity.value;
+      lessonsBought.value = 0 * quantity.value;
+    }
+    else if(dropdown.selectedIndex == 7){ //STG Shirt
+      amount.value = 35 * quantity.value;
+      lessonsBought.value = 0 * quantity.value;
     }
   }
 </script>

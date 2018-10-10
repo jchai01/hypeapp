@@ -19,7 +19,7 @@ class PaymentsController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -27,7 +27,7 @@ class PaymentsController extends Controller
      */
     public function index()
     {
-      $payments = Payment::latest()->paginate(10);
+      $payments = Payment::latest()->paginate(15);
       return view('payments.index')->with('payments', $payments);
     }
 
@@ -66,6 +66,7 @@ class PaymentsController extends Controller
       $payment->quantity = $request->input('quantity');
       $payment->package = $request->input('package');
       $payment->amount = $request->input('amount');
+      $payment->lessons_bought = $request->input('lessons');
       $payment->save();
 
       return redirect('/payments')->with('success', 'Payment Added');

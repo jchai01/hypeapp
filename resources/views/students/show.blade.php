@@ -5,19 +5,13 @@
   {{--Unused section to declare variables--}}
   @section('variableSection')
 
-    {{--Declarations--}}
+    {{--Declarations and initialisations--}}
     {{$totalLessonsPaidFor = 0}}
     {{ $totalLessonsAttended = count($attendances) }}
 
-    {{--Compute variable totalLessonsPaidFor --}}
+    {{--Loop though all payments made by this student and adds up the total number of lessons bought--}}
     @foreach ($payments as $payment)
-      @if($payment->package == "Individual Package" || $payment->package == "Buddy Package")
-        {{ $totalLessonsPaidFor += (8 * $payment->quantity) }}
-      @elseif($payment->package == "First Trial Class" || $payment->package == "Subsequent Trial Class")
-        {{$totalLessonsPaidFor += 1}}
-      @elseif($payment->package == "Multi-Term Package")
-        {{$totalLessonsPaidFor += 16}}
-      @endif
+      {{$totalLessonsPaidFor = $totalLessonsPaidFor + $payment->lessons_bought}}
     @endforeach
 
   @endsection
@@ -30,7 +24,7 @@
 <!--Delete button-->
 {!!Form::open(['action' => ['StudentsController@destroy', $student->id], 'method' => 'POST', 'class' => 'float-right'])!!}
   {{Form::hidden('_method', 'DELETE')}}
-  {{Form::submit('delete', ['class' => 'btn btn-danger'])}}
+  {{Form::submit('delete', ['class' => 'btn btn-danger' , 'disabled'])}} {{--Disable the delete button to prevent accidental delete--}}
 {!!Form::close()!!}
 
 <br/><br/>
@@ -80,7 +74,7 @@
     </tr>
 
     <tr>
-      <td>Created on:</td> <td>{{$student->created_at}}</td>
+      <td>Created on:</td> <td>{{$student->created_at->toDateString()}}</td>
     </tr>
 
     <tr>
@@ -95,15 +89,20 @@
   @if(count($payments) > 0)
     <table class="table table-striped">
       <tr>
-        <th colspan="4">Payment Records: {{count($payments)}}</th>
+        <th colspan="6">Number of payment records: {{count($payments)}}</th>
       </tr>
 
       <tr>
-        <th>Date</th><th>Payments made</th><th>Quantity</th><th>Amount</th>
+        <th>Date (Y-m-d)</th><th>Packages/Lessons/Items</th><th>Quantity</th><th>Amount</th><th>No. of lessons paid</th><th>Recorded by</th>
       </tr>
     @foreach ($payments as $payment)
       <tr>
-        <td>{{$payment->created_at}}</td><td>{{$payment->package}}</td><td>{{$payment->quantity}}</td><td>{{$payment->amount}}</td>
+        <td>{{$payment->created_at->toDateString()}}</td>
+        <td>{{$payment->package}}</td>
+        <td>{{$payment->quantity}}</td>
+        <td>{{$payment->amount}}</td>
+        <td>{{$payment->lessons_bought}}</td>
+        <td>{{$payment->user->name}}</td>
       </tr>
 
     @endforeach

@@ -27,7 +27,7 @@ class StudentsController extends Controller
      */
     public function index()
     {
-      $students = Student::orderBy('created_at')->paginate(10);
+      $students = Student::orderBy('name')->paginate(15);
       return view('students.index')->with('students', $students);
     }
 
@@ -103,7 +103,7 @@ class StudentsController extends Controller
     {
         $student = Student::find($id);
         $attendances = Attendance::where('student_id', '=', $id)->get();
-        $payments = Payment::where('student_id', '=', $id)->get();
+        $payments = Payment::where('student_id', '=', $id)->latest()->get();
 
         return view('students.show')->with('student', $student)->with('attendances', $attendances)->with('payments', $payments);
     }

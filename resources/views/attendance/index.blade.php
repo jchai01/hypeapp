@@ -9,7 +9,7 @@
 
     <table class="table table-striped">
       <tr>
-        <th>Dates</th>
+        <th>Dates (Y-m-d)</th>
         <th></th>
       </tr>
     @foreach($dates as $date)
