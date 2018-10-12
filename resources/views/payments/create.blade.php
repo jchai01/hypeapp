@@ -23,7 +23,7 @@
 
     <!--Types of packages-->
     <div class="form-group" >
-      <label for="pack">Select Packages/Lessons/Items: </label>
+      <label for="pack">Select Packages/Lessons/Product: </label>
       <select name="package" id="package" class="form-control" onchange="changeAmount()">
         <option value="0">Select a Package</option>
         <option value="Individual Package">Individual Package($250)</option>
@@ -33,6 +33,7 @@
         <option value="Subsequent Class">Subsequent Class($35)</option>
         <option value="Hype Tribe Shirt">Hype Tribe Shirt($35)</option>
         <option value="STG Shirt">STG Shirt($35)</option>
+        <option value="Others">Others</option>
       </select>
 
       <small class="p-2 mb-2 bg-warning text-dark" id="reminder" style="display:none;"> *Remember to make record for the other buddy </small>
@@ -101,11 +102,15 @@
     }
     else if(dropdown.selectedIndex == 6){ //Hype Tribe Shirt
       amount.value = 35 * quantity.value;
-      lessonsBought.value = 0 * quantity.value;
+      lessonsBought.value = 0;
     }
     else if(dropdown.selectedIndex == 7){ //STG Shirt
       amount.value = 35 * quantity.value;
-      lessonsBought.value = 0 * quantity.value;
+      lessonsBought.value = 0;
+    }
+    else if(dropdown.selectedIndex == 8){ //Others
+      amount.value = 0;
+      lessonsBought.value = 0;
     }
   }
 </script>
