@@ -80,7 +80,9 @@ class PaymentsController extends Controller
      */
     public function show($id)
     {
-        //
+      $payment = Payment::find($id);
+
+      return view('payments.show')->with('payment', $payment);
     }
 
     /**
@@ -91,7 +93,9 @@ class PaymentsController extends Controller
      */
     public function edit($id)
     {
-        //
+      $students = Student::orderBy('name')->get();
+      $payment = Payment::find($id);
+      return view('payments.edit')->with('payment', $payment)->with('students', $students);
     }
 
     /**
@@ -103,7 +107,23 @@ class PaymentsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      $this->validate($request, [
+        'student' => 'required',
+        'package' => 'required',
+        'quantity' => 'nullable',
+        'amount' => 'nullable',
+        'lessons' => 'nullable',
+      ]);
+
+      $payment = Payment::find($id);
+      $payment->student_id = $request->input('student');
+      $payment->quantity = $request->input('quantity');
+      $payment->package = $request->input('package');
+      $payment->amount = $request->input('amount');
+      $payment->lessons_bought = $request->input('lessons');
+      $payment->save();
+
+      return redirect('/payments')->with('success', 'Payment record updated');
     }
 
     /**
@@ -114,6 +134,9 @@ class PaymentsController extends Controller
      */
     public function destroy($id)
     {
-        //
+      $payment = Payment::find($id);
+      $payment->delete();
+
+      return redirect('/payments')->with('success', 'Payment record removed');
     }
 }

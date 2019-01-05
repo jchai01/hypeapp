@@ -179,7 +179,7 @@ class StudentsController extends Controller
       //$data=Student::select('id', 'name')->where('type', $request->id)->take(100)->get();
       $data=Student::select('id', 'name')->where([
         ['type', '=', $request->id], ['active', '=', 1]
-        ])->take(100)->get();
+        ])->take(100)->orderBy("name")->get();
       return response()->json($data);
     }
 }

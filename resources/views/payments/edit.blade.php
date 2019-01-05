@@ -6,9 +6,9 @@
 
   <a href="/payments" class="btn btn-secondary">Go back</a>
 
-  <h1>Add Payment</h1>
+  <h1>Update Payment Record</h1>
 
-  {!! Form::open(['action' => 'PaymentsController@store', 'method' => "POST"]) !!}
+  {!! Form::open(['action' => ['PaymentsController@update', $payment->id], 'method' => "POST"]) !!}
 
   <!--Student dropdown list-->
   <div class="form-group">
@@ -16,7 +16,11 @@
     <select name="student" class="form-control" id="sel">
       <option value="0">Select a student</option>
       @foreach ($students as $student)
-        <option value="{{$student->id}}">{{$student->name}} </option>
+        <option value="{{$student->id}}"
+          @if ($student->id == $payment->student_id)
+            selected
+          @endif
+        >{{$student->name}} </option>
       @endforeach
     </select>
   </div>
@@ -26,14 +30,55 @@
       <label for="pack">Select Packages/Lessons/Product: </label>
       <select name="package" id="package" class="form-control" onchange="changeAmount()">
         <option value="0">Select a Package</option>
-        <option value="Individual Package">Individual Package ($160)</option>
-        <option value="Buddy Package">Buddy Package ($150 each)</option>
-        <option value="Multi-Term Package">Multi-Term Package ($300)</option>
-        <option value="First Trial Class">First Trial Class ($25)</option>
-        <option value="Subsequent Class">Subsequent Class ($45)</option>
-        <option value="Hype Tribe Shirt">Hype Tribe Shirt ($35)</option>
-        <option value="STG Shirt">STG Shirt ($35)</option>
-        <option value="Others">Others</option>
+
+        <option value="Individual Package"
+        @if($payment->package == "Individual Package")
+          selected
+        @endif
+        >Individual Package($160)</option>
+
+        <option value="Buddy Package"
+        @if($payment->package == "Buddy Package")
+          selected
+        @endif
+        >Buddy Package($150 each)</option>
+
+        <option value="Multi-Term Package"
+        @if($payment->package == "Multi-Term Package")
+          selected
+        @endif
+        >Multi-Term Package($300)</option>
+
+        <option value="First Trial Class"
+        @if($payment->package == "First Trial Class")
+          selected
+        @endif
+        >First Trial Class($25)</option>
+
+        <option value="Subsequent Class"
+        @if($payment->package == "Subsequent Class")
+          selected
+        @endif
+        >Subsequent Class($45)</option>
+
+        <option value="Hype Tribe Shirt"
+        @if($payment->package == "Hype Tribe Shirt")
+          selected
+        @endif
+        >Hype Tribe Shirt($35)</option>
+
+        <option value="STG Shirt"
+        @if($payment->package == "STG Shirt")
+          selected
+        @endif
+        >STG Shirt($35)</option>
+
+        <option value="Others"
+        @if($payment->package == "Others")
+          selected
+        @endif
+        >Others</option>
+
       </select>
 
       <small class="p-2 mb-2 bg-warning text-dark" id="reminder" style="display:none;"> *Remember to make record for the other buddy </small>
@@ -42,7 +87,7 @@
     <!--Quantity input-->
     <div class="form-group">
     <label for="sel">Quantity: </label>
-        <input type="number" step="1" name="quantity" id="quantity" value="1" class="form-control" onchange="changeAmount()">
+        <input type="number" value="{{$payment->quantity}}" step="1" name="quantity" id="quantity" value="1" class="form-control" onchange="changeAmount()">
     </div>
 
     <!--Amount input-->
@@ -52,17 +97,19 @@
         <div class="input-group-prepend">
           <span class="input-group-text">$</span>
         </div>
-        <input type="number" step="any" name="amount" id="amount" class="form-control">
+        <input type="number" value="{{$payment->amount}}" step="any" name="amount" id="amount" class="form-control">
       </div>
     </div>
 
     <!--Lessons bought input-->
     <div class="form-group">
     <label for="sel">Number of lessons bought: </label>
-        <input type="number" step="1" name="lessons" id="lessons" value="0" min="0" class="form-control">
+        <input type="number" value="{{$payment->lessons_bought}}" step="1" name="lessons" id="lessons" value="0" min="0" class="form-control">
     </div>
 
-    {{Form::submit('submit', ['class'=>'btn btn-success'])}}
+    {{Form::hidden('_method', 'PUT')}}
+    {{Form::submit('Update', ['class'=>'btn btn-success'])}}
+
   {!! Form::close() !!}
 </div>
 @endsection

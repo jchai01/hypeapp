@@ -9,7 +9,7 @@
 
     <table class="table table-striped">
 
-      <tr><th>Student Name</th><th>Packages/Items</th><th>Quantity</th><th>Amount</th><th>No. of lessons paid</th><th>Date Added (Y-m-d)</th><th>Recorded by</th></tr>
+      <tr><th>Student Name</th><th>Packages/Items</th><th>Quantity</th><th>Amount</th><th>No. of lessons paid</th><th>Recorded by</th> <th>Show</th></tr>
     @foreach($payments as $payment)
         <tr>
           <td>{{$payment->student->name}}</td>
@@ -17,8 +17,8 @@
           <td>{{$payment->quantity}}</td>
           <td>${{$payment->amount}}</td>
           <td>{{$payment->lessons_bought}}</td>
-          <td>{{$payment->created_at}}</td>
           <td>{{$payment->user->name}}</td>
+          <td><a href="/payments/{{$payment->id}}" class="btn btn-primary">Show</a></td>
         </tr>
 
     @endforeach
