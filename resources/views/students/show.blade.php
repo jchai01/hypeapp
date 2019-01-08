@@ -32,6 +32,18 @@
   <h2>Student Name: {{$student->name}}</h2>
 
   <table class="table table-striped table-bordered">
+
+    <tr>
+      <td>Status:</td>
+      <td>
+        @if ($student->active==0)
+          Inactive
+        @else
+          Active
+        @endif
+      </td>
+    </tr>
+
     <tr>
       <td>Type:</td>
       <td>

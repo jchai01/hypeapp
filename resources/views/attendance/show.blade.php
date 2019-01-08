@@ -10,7 +10,7 @@
   {{Form::submit('delete', ['class' => 'btn btn-danger'])}}
 {!!Form::close()!!}
 
-<h1>Students present on {{ $date }}</h1>
+<h1>{{count($attendances)}} Student(s) present on {{ $date }}</h1>
 
 @if(count($attendances) > 0)
   <h3>Attendance taken by: {{$attendances[0]->user->name}}</h3>
@@ -25,7 +25,7 @@
     @foreach($attendances as $attendance)
       <tr>
         <td>
-          {{$attendance->student->name}}
+          <a href="/students/{{$attendance->student->id}}"> {{$attendance->student->name}} </a>
           @if ($attendance->student->type == 'trial')
             (Trial Student)
           @elseif ($attendance->student->type == 'private')

@@ -24,6 +24,7 @@ Route::resource('students', 'StudentsController');
 Route::get('/createSuccess',function(){
   return view('students.success');
 });
+Route::get('/search', 'StudentsController@search'); //Search feature
 
 //Payments
 Route::resource('payments', 'PaymentsController');

@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-header">Dashboard</div>
 
@@ -14,14 +14,25 @@
                         </div>
                     @endif
 
-                    <a href="/students" class="btn btn-primary"> View Students </a>
-                    <a href="/students/create" class="btn btn-primary"> Add Student </a> <br/><br/>
-                    <a href="/attendance" class="btn btn-primary"> View Attendance </a>
-                    <a href="/attendance/create" class="btn btn-primary"> Take Attendance </a> <br/><br/>
-                    <a href="/payments" class="btn btn-primary"> View Payment </a>
-                    <a href="/payments/create" class="btn btn-primary"> Add Payment </a>
-                </div>
-            </div>
+                    <table class="table table-striped table-bordered">
+                      <tr>
+                        <td> <a href="/students" class="btn btn-primary"> View Students </a> </td>
+                        <td> <a href="/students/create" class="btn btn-primary"> Add Student </a> </td>
+                      </tr>
+
+                      <tr>
+                        <td> <a href="/attendance" class="btn btn-primary"> View Attendance </a> </td>
+                        <td> <a href="/attendance/create" class="btn btn-primary"> Take Attendance </a> </td>
+                      </tr>
+
+                      <tr>
+                        <td> <a href="/payments" class="btn btn-primary"> View Payment </a> </td>
+                        <td> <a href="/payments/create" class="btn btn-primary"> Add Payment </a> </td>
+                      </tr>
+                  </table>
+
+                </div> {{-- Closes card body --}}
+            </div> {{-- Closes card --}}
         </div>
     </div>
 </div>

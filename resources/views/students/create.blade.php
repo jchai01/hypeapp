@@ -61,7 +61,7 @@ I declare that I have read all the information above. Information provided above
 
   {!! Form::open(['action' => 'StudentsController@store', 'method' => "POST"]) !!}
     <div class="form-group">
-      {{Form::label('name', 'Name, As in NRIC')}}
+      {{Form::label('name', 'Name')}}
       {{Form::text ('name', '', ['class' => 'form-control', 'placeholder' => 'Name'])}}
     </div>
 

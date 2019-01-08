@@ -27,8 +27,16 @@ class StudentsController extends Controller
      */
     public function index()
     {
-      $students = Student::orderBy('name')->paginate(15);
+      $students = Student::orderBy('name')->paginate(50);
       return view('students.index')->with('students', $students);
+    }
+
+    //Search function
+    public function search(Request $request){
+      $search = $request->get('search');
+      $students = Student::where('name', 'like', "%$search%")->paginate(50);;
+      return view('students.index')->with('students', $students);
+
     }
 
     /**
@@ -182,4 +190,5 @@ class StudentsController extends Controller
         ])->take(100)->orderBy("name")->get();
       return response()->json($data);
     }
+
 }
